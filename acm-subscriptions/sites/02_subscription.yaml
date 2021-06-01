@@ -7,7 +7,7 @@ metadata:
     app: sites-ran-subscription
   annotations:
     apps.open-cluster-management.io/git-path: manifests/sites
-    apps.open-cluster-management.io/git-branch: main
+    apps.open-cluster-management.io/git-branch: scale-lab
 spec:
   channel: sites-ran-sub/sites-ran-subscription 
   placement:

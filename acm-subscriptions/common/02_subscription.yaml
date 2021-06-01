@@ -7,7 +7,7 @@ metadata:
     app: common-ran-subscription
   annotations:
     apps.open-cluster-management.io/git-path: manifests/common
-    apps.open-cluster-management.io/git-branch: main
+    apps.open-cluster-management.io/git-branch: scale-lab
 spec:
   channel: common-ran-subs/common-ran-subscription 
   placement:

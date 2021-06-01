@@ -6,4 +6,4 @@ metadata:
   namespace: common-ran-sub
 spec:
   type: GitHub
-  pathname: https://github.com/serngawy/ztp-ran-manifests
+  pathname: https://github.com/TheRealHaoLiu/ztp-ran-manifests
