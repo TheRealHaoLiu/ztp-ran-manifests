@@ -11,9 +11,10 @@ subjects:
     - name: group-sno-du-console-policy
       kind: Policy
       apiGroup: policy.open-cluster-management.io
-    - name: group-sno-du-log-forwarder-policy
-      kind: Policy
-      apiGroup: policy.open-cluster-management.io
+# commented out due to lack of kafka instance in our test environment
+#    - name: group-sno-du-log-forwarder-policy
+#      kind: Policy
+#      apiGroup: policy.open-cluster-management.io
     - name: group-sno-du-log-policy
       kind: Policy
       apiGroup: policy.open-cluster-management.io
