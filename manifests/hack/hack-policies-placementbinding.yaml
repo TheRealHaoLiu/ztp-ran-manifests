@@ -2,7 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
     name: hack-policies-placementbinding
-    namespace: sites-sub
+    namespace: hack-sub
 placementRef:
     name: hack-policies-placementrule
     kind: PlacementRule

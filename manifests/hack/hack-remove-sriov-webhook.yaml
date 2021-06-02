@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-    name: site-du-sno-1-perfprofile-policy
+    name: hack-remove-sriov-wehook
     namespace: hack-sub
     annotations:
         policy.open-cluster-management.io/categories: CM Configuration Management
@@ -25,9 +25,10 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         kind: ValidatingWebhookConfiguration
+                        apiVersion: admissionregistration.k8s.io/v1
                         metadata:
                           name: sriov-operator-webhook-config
 
