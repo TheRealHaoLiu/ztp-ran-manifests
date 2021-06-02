@@ -9,6 +9,6 @@ metadata:
     apps.open-cluster-management.io/git-path: manifests/common
     apps.open-cluster-management.io/git-branch: scale-lab
 spec:
-  channel: common-ran-subs/common-ran-subscription 
+  channel: common-ran-sub/common-ran-subscription 
   placement:
     local: true
