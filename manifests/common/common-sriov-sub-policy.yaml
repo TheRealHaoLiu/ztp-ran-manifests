@@ -25,7 +25,7 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: musthave
+                    - complianceType: mustnothave
                       objectDefinition:
                         apiVersion: v1
                         kind: Namespace
@@ -33,7 +33,7 @@ spec:
                             labels:
                                 openshift.io/run-level: "1"
                             name: openshift-sriov-network-operator
-                    - complianceType: musthave
+                    - complianceType: mustnothave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1
                         kind: OperatorGroup
@@ -43,7 +43,7 @@ spec:
                         spec:
                             targetNamespaces:
                                 - openshift-sriov-network-operator
-                    - complianceType: musthave
+                    - complianceType: mustnothave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
                         kind: Subscription

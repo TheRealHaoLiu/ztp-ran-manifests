@@ -1,8 +1,8 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-    name: site-du-sno-1-sriov-nw-mh-policy
-    namespace: sites-sub
+    name: site-du-sno-1-perfprofile-policy
+    namespace: hack-sub
     annotations:
         policy.open-cluster-management.io/categories: CM Configuration Management
         policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: site-du-sno-1-sriov-nw-mh-policy-config
+                name: hack-remove-sriov-webhook
             spec:
                 remediationAction: enforce
                 severity: low
@@ -27,12 +27,7 @@ spec:
                 object-templates:
                     - complianceType: mustnothave
                       objectDefinition:
-                        apiVersion: sriovnetwork.openshift.io/v1
-                        kind: SriovNetwork
+                        kind: ValidatingWebhookConfiguration
                         metadata:
-                            name: sriov-nw-du-mh
-                            namespace: openshift-sriov-network-operator
-                        spec:
-                            networkNamespace: openshift-sriov-network-operator
-                            resourceName: du_mh
-                            vlan: 150
+                          name: sriov-operator-webhook-config
+

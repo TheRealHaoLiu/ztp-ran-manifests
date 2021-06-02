@@ -25,7 +25,7 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: musthave
+                    - complianceType: mustnothave
                       objectDefinition:
                         apiVersion: ptp.openshift.io/v1
                         kind: PtpConfig

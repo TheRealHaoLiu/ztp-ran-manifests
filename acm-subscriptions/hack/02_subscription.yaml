@@ -1,0 +1,14 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: hack-ran-subscription
+  namespace: hack-ran-sub
+  labels:
+    app: hack-ran-subscription
+  annotations:
+    apps.open-cluster-management.io/git-path: manifests/hack
+    apps.open-cluster-management.io/git-branch: scale-lab
+spec:
+  channel: hack-ran-sub/hack-ran-subscription
+  placement:
+    local: true
