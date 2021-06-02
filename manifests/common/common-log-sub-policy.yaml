@@ -25,13 +25,13 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
                         kind: Namespace
                         metadata:
                             name: openshift-logging
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
                         kind: Subscription
@@ -43,7 +43,7 @@ spec:
                             name: cluster-logging
                             source: redhat-operators
                             sourceNamespace: openshift-marketplace
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1
                         kind: OperatorGroup

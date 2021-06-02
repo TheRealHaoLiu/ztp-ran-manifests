@@ -25,7 +25,7 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: machineconfiguration.openshift.io/v1
                         kind: MachineConfigPool

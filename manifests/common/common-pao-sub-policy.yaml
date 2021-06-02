@@ -25,7 +25,7 @@ spec:
                     include:
                         - '*'
                 object-templates:
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
                         kind: Namespace
@@ -34,7 +34,7 @@ spec:
                                 openshift.io/cluster-monitoring: "true"
                             name: openshift-performance-addon-operator
                         spec: {}
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
                         kind: CatalogSource
@@ -49,14 +49,14 @@ spec:
                             image: quay.io/openshift-kni/performance-addon-operator-index:4.8-snapshot
                             publisher: Red Hat
                             sourceType: grpc
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1
                         kind: OperatorGroup
                         metadata:
                             name: performance-addon-operator
                             namespace: openshift-performance-addon-operator
-                    - complianceType: mustnothave
+                    - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
                         kind: Subscription
