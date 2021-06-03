@@ -27,19 +27,20 @@ spec:
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
-                        apiVersion: sriovnetwork.openshift.io/v1
-                        kind: SriovNetworkNodePolicy
+                        apiVersion: v1
+                        kind: ConfigMap
                         metadata:
                             name: sriov-nnp-du-mh
-                            namespace: openshift-sriov-network-operator
-                        spec:
-                            deviceType: vfio-pci
-                            isRdma: false
-                            nicSelector:
-                                pfNames:
-                                    - ens7f0
-                            nodeSelector:
-                                node-role.kubernetes.io/master: ""
-                            numVfs: 8
-                            priority: 10
-                            resourceName: du_mh
+                            namespace: default
+                        data:
+                            spec: |
+                                deviceType: vfio-pci
+                                isRdma: false
+                                nicSelector:
+                                    pfNames:
+                                        - ens7f0
+                                nodeSelector:
+                                    node-role.kubernetes.io/master: ""
+                                numVfs: 8
+                                priority: 10
+                                resourceName: du_mh

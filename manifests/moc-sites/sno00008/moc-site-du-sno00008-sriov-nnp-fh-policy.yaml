@@ -31,7 +31,7 @@ spec:
                         kind: ConfigMap
                         metadata:
                             name: sriov-nnp-du-fh
-                            namespace: test
+                            namespace: default
                         data:
                             spec: | 
                                 deviceType: netdevice

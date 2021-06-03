@@ -27,12 +27,13 @@ spec:
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
-                        apiVersion: sriovnetwork.openshift.io/v1
-                        kind: SriovNetwork
+                        apiVersion: v1
+                        kind: ConfigMap
                         metadata:
                             name: sriov-nw-du-mh
-                            namespace: openshift-sriov-network-operator
-                        spec:
-                            networkNamespace: openshift-sriov-network-operator
-                            resourceName: du_mh
-                            vlan: 150
+                            namespace: default
+                        data:
+                            spec: |
+                                networkNamespace: openshift-sriov-network-operator
+                                resourceName: du_mh
+                                vlan: 150
