@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: site-sno00518-configmap-policy-placementbinding
+    namespace: sites-sub
+placementRef:
+    name: site-sno00518-configmap-policy-placementrule
+    kind: PlacementRule
+    apiGroup: apps.open-cluster-management.io
+subjects:
+    - name: site-sno00518-configmap-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
