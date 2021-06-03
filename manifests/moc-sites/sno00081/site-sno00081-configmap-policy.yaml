@@ -39,7 +39,7 @@ spec:
                             name: site-sno00081-config
                             namespace: site-sno00081
                         data:
-                            interface: ens5f0
-                            phc2sysOpts: -a -r -n 24
-                            resourceName: du_fh
-                            vlan: 3011
+                            interface: "ens5f0"
+                            phc2sysOpts: "-a -r -n 24"
+                            resourceName: "du_fh"
+                            vlan: "2656"
