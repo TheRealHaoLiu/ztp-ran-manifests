@@ -42,4 +42,4 @@ spec:
                             interface: "ens5f0"
                             phc2sysOpts: "-a -r -n 24"
                             resourceName: "du_fh"
-                            vlan: "2164"
+                            vlan: "2353"
