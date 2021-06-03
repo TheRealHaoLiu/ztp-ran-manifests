@@ -5,6 +5,7 @@ END_INDEX=$2
 
 PREFIX="sno"
 
+rm -rf manifests/moc-sites
 for i in $(seq -f "%05g" $START_INDEX $END_INDEX); do
   mkdir -p manifests/moc-sites/$PREFIX$i
   for template_file in `ls moc-site-template`; do

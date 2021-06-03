@@ -1,7 +1,7 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-    name: site-SITE-policies-placementrule
+    name: site-SITE-configmap-policy-placementrule
     namespace: sites-sub
 spec:
     clusterSelector:
