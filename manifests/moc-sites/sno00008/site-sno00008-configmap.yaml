@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-    name: site-sno00002-policy
+    name: site-sno00008-policy
     namespace: sites-sub
     annotations:
         policy.open-cluster-management.io/categories: CM Configuration Management
@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: site-sno00002-policy-config
+                name: site-sno00008-policy-config
             spec:
                 remediationAction: enforce
                 severity: low
@@ -30,16 +30,16 @@ spec:
                         apiVersion: v1
                         kind: Namespace
                         metadata:
-                            name: site-sno00002
+                            name: site-sno00008
                     - complianceType: musthave
                       objectDefinition:
                         kind: ConfigMap
                         apiVersion: v1
                         metadata:
-                            name: site-sno00002-config
-                            namespace: site-sno00002
+                            name: site-sno00008-config
+                            namespace: site-sno00008
                         data:
                             interface: ens5f0
                             phc2sysOpts: -a -r -n 24
                             resourceName: du_fh
-                            vlan: 3390
+                            vlan: 509
