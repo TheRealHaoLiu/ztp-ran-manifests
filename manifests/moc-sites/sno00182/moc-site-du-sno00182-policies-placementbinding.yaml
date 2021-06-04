@@ -2,7 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
     name: moc-site-du-sno00182-policies-placementbinding
-    namespace: sites-sub
+    namespace: sites-ran-sub
 placementRef:
     name: moc-site-du-sno00182-policies-placementrule
     kind: PlacementRule

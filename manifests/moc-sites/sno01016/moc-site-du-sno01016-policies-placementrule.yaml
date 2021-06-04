@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
     name: moc-site-du-sno01016-policies-placementrule
-    namespace: sites-sub
+    namespace: sites-ran-sub
 spec:
     clusterSelector:
         matchExpressions:
