@@ -9,8 +9,6 @@ kind: Application
 metadata:
   name: common
   namespace: common-ran-sub
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: https://kubernetes.default.svc
