@@ -58,4 +58,6 @@ $expected_policy_count,\
 $policy_count,\
 $expected_total_resource_count,\
 $total_resource_count" >> ${file}
+
+    sleep $HISTO_DELAY
 done
