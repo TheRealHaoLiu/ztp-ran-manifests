@@ -1,8 +1,14 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: common-ran-sub
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: common
-  namespace: argocd
+  namespace: common-ran-sub
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:

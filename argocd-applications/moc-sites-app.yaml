@@ -1,8 +1,14 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sites-ran-sub
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: moc-sites
-  namespace: argocd
+  namespace: sites-ran-sub
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
