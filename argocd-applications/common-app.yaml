@@ -1,3 +1,9 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: common-ran-sub
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
