@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-    name: common-sriov-sub-policy-subscription
+    name: common-sriov-sub-policy-ns
     namespace: common-sub
     annotations:
         policy.open-cluster-management.io/categories: CM Configuration Management
@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-sriov-sub-policy-subscription-config
+                name: common-sriov-sub-policy-ns-config
             spec:
                 remediationAction: enforce
                 severity: low
@@ -27,13 +27,19 @@ spec:
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
-                        apiVersion: operators.coreos.com/v1alpha1
-                        kind: Subscription
+                        apiVersion: v1
+                        kind: Namespace
                         metadata:
-                            name: sriov-network-operator-subscription
+                            labels:
+                                openshift.io/run-level: "1"
+                            name: openshift-sriov-network-operator
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
+                        metadata:
+                            name: sriov-network-operators
                             namespace: openshift-sriov-network-operator
                         spec:
-                            channel: "4.7"
-                            name: sriov-network-operator
-                            source: redhat-operators
-                            sourceNamespace: openshift-marketplace
+                            targetNamespaces:
+                                - openshift-sriov-network-operator

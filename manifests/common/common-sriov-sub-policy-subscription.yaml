@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-    name: common-sriov-sub-policy-subscription
+    name: common-sriov-sub-policy-op-group
     namespace: common-sub
     annotations:
         policy.open-cluster-management.io/categories: CM Configuration Management
@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-sriov-sub-policy-subscription-config
+                name: common-sriov-sub-policy-op-group-config
             spec:
                 remediationAction: enforce
                 severity: low
