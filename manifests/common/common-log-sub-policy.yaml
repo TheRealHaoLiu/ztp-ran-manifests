@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-log-sub-policy-config
+                name: common-log-sub-policy-ns-config
             spec:
                 remediationAction: enforce
                 severity: low
@@ -35,7 +35,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-log-sub-policy-config
+                name: common-log-sub-policy-sub-config
             spec:
                 remediationAction: enforce
                 severity: low
@@ -61,7 +61,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-log-sub-policy-config
+                name: common-log-sub-policy-og-config
             spec:
                 remediationAction: enforce
                 severity: low
