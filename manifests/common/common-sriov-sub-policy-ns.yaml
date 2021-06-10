@@ -33,13 +33,3 @@ spec:
                             labels:
                                 openshift.io/run-level: "1"
                             name: openshift-sriov-network-operator
-                    - complianceType: musthave
-                      objectDefinition:
-                        apiVersion: operators.coreos.com/v1
-                        kind: OperatorGroup
-                        metadata:
-                            name: sriov-network-operators
-                            namespace: openshift-sriov-network-operator
-                        spec:
-                            targetNamespaces:
-                                - openshift-sriov-network-operator
