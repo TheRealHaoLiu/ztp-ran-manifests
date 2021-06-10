@@ -15,7 +15,7 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-log-sub-policy-config
+                name: common-log-sub-policy-ns-config
             spec:
                 remediationAction: enforce
                 severity: low
@@ -31,6 +31,20 @@ spec:
                         kind: Namespace
                         metadata:
                             name: openshift-logging
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: common-log-sub-policy-sub-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
@@ -43,6 +57,20 @@ spec:
                             name: cluster-logging
                             source: redhat-operators
                             sourceNamespace: openshift-marketplace
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: common-log-sub-policy-og-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1
