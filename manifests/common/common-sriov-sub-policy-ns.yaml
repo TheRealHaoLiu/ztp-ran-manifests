@@ -49,17 +49,14 @@ spec:
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
-                        apiVersion: operators.coreos.com/v1alpha1
-                        kind: Subscription
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
                         metadata:
-                            name: sriov-network-operator-subscription
+                            name: sriov-network-operators
                             namespace: openshift-sriov-network-operator
                         spec:
-                            channel: "4.7"
-                            name: sriov-network-operator
-                            source: redhat-operators
-                            sourceNamespace: openshift-marketplace
-
+                            targetNamespaces:
+                                - openshift-sriov-network-operator
         - objectDefinition:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
