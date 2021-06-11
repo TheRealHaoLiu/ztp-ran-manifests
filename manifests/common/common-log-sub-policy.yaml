@@ -35,6 +35,30 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
+                name: common-log-sub-policy-og-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
+                        metadata:
+                            name: cluster-logging
+                            namespace: openshift-logging
+                        spec:
+                            targetNamespaces:
+                                - openshift-logging
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
                 name: common-log-sub-policy-sub-config
             spec:
                 remediationAction: enforce
@@ -57,27 +81,3 @@ spec:
                             name: cluster-logging
                             source: redhat-operators
                             sourceNamespace: openshift-marketplace
-        - objectDefinition:
-            apiVersion: policy.open-cluster-management.io/v1
-            kind: ConfigurationPolicy
-            metadata:
-                name: common-log-sub-policy-og-config
-            spec:
-                remediationAction: enforce
-                severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
-                object-templates:
-                    - complianceType: musthave
-                      objectDefinition:
-                        apiVersion: operators.coreos.com/v1
-                        kind: OperatorGroup
-                        metadata:
-                            name: cluster-logging
-                            namespace: openshift-logging
-                        spec:
-                            targetNamespaces:
-                                - openshift-logging
