@@ -19,11 +19,6 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
@@ -41,11 +36,6 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
@@ -65,11 +55,6 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
@@ -83,3 +68,20 @@ spec:
                             name: sriov-network-operator
                             source: redhat-operators
                             sourceNamespace: openshift-marketplace
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: common-sriov-sub-policy-operator-check
+            spec:
+                remediationAction: inform
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1alpha1
+                        kind: ClusterServiceVersion
+                        metadata:
+                            namespace: openshift-sriov-network-operator
+                        status:
+                            phase: Succeeded
