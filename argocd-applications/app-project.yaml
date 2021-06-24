@@ -4,6 +4,9 @@ metadata:
   name: default
   namespace: openshift-gitops
 spec:
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace
   destinations:
   - namespace: common-sub
     server: https://kubernetes.default.svc
