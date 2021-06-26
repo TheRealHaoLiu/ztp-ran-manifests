@@ -80,8 +80,10 @@ spec:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
-                        kind: InstallPlan
+                        kind: ClusterServiceVersion
                         metadata:
                             namespace: openshift-sriov-network-operator
+                        spec:
+                            displayName: SR-IOV Network Operator
                         status:
-                            phase: Complete
+                            phase: Succeeded

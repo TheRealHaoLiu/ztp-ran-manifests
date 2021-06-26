@@ -102,8 +102,10 @@ spec:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: operators.coreos.com/v1alpha1
-                        kind: InstallPlan
+                        kind: ClusterServiceVersion
                         metadata:
                             namespace: openshift-performance-addon-operator
+                        spec:
+                            displayName: Performance Addon Operator
                         status:
-                            phase: Complete
+                            phase: Succeeded
