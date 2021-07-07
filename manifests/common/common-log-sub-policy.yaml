@@ -26,6 +26,8 @@ spec:
                         kind: Namespace
                         metadata:
                             name: openshift-logging
+                            annotations:
+                              workload.openshift.io/allowed: management
         - objectDefinition:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
