@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     path: manifests/common
-    repoURL: https://github.com/TheRealHaoLiu/ztp-ran-manifests/
+    repoURL: GIT_HOST
     targetRevision: scale-lab
   syncPolicy:
     automated:

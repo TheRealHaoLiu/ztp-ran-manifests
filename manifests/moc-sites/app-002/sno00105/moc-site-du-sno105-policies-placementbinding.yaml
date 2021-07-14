@@ -1,0 +1,25 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: moc-site-du-sno105-policies-placementbinding
+    namespace: sites-sub
+placementRef:
+    name: moc-site-du-sno105-policies-placementrule
+    kind: PlacementRule
+    apiGroup: apps.open-cluster-management.io
+subjects:
+    - name: moc-site-du-sno105-sriov-nw-fh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: moc-site-du-sno105-sriov-nnp-fh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: moc-site-du-sno105-sriov-nw-mh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: moc-site-du-sno105-sriov-nnp-mh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: moc-site-du-sno105-perfprofile-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io

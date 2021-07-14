@@ -13,7 +13,7 @@ spec:
     directory:
       recurse: true
     path: manifests/moc-sites
-    repoURL: https://github.com/TheRealHaoLiu/ztp-ran-manifests/
+    repoURL: GIT_HOST
     targetRevision: scale-lab
   syncPolicy:
     automated:
