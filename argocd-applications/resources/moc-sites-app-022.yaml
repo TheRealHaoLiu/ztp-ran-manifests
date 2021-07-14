@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: moc-sites
+  name: moc-sites-app-022
   namespace: openshift-gitops
 spec:
   destination:
@@ -12,7 +12,7 @@ spec:
   source:
     directory:
       recurse: true
-    path: manifests/moc-sites
+    path: manifests/moc-sites/app-022
     repoURL: GIT_HOST
     targetRevision: scale-lab
   syncPolicy:

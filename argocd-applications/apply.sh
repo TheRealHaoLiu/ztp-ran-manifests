@@ -48,12 +48,12 @@ echo
 
 if [ "$DEBUG" == "true" ]; then
     for file in ${DEBUG_FILES[@]}; do
-        cat $file | sed "s|GIT_HOST|${GIT_HOST}|" | $KUBECTL_CMD $SUB_CMD -f -
+        cat ./resources/$file | sed "s|GIT_HOST|${GIT_HOST}|" | $KUBECTL_CMD $SUB_CMD -f -
     done
 
     exit $#
 fi
 
-for file in $(ls); do
-    cat $file | sed "s|GIT_HOST|${GIT_HOST}|" | $KUBECTL_CMD $SUB_CMD -f -
+for file in $(ls ./resources); do
+    cat ./resources/$file | sed "s|GIT_HOST|${GIT_HOST}|" | $KUBECTL_CMD $SUB_CMD -f -
 done

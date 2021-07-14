@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: moc-sites-app-017
+  namespace: openshift-gitops
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sites-sub
+  project: default
+  source:
+    directory:
+      recurse: true
+    path: manifests/moc-sites/app-017
+    repoURL: GIT_HOST
+    targetRevision: scale-lab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ApplyOutOfSyncOnly=true
