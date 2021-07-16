@@ -33,22 +33,6 @@ spec:
             apiVersion: policy.open-cluster-management.io/v1
             kind: ConfigurationPolicy
             metadata:
-                name: common-pao-sub-policy-op-config
-            spec:
-                remediationAction: enforce
-                severity: low
-                object-templates:
-                    - complianceType: musthave
-                      objectDefinition:
-                        apiVersion: operators.coreos.com/v1
-                        kind: OperatorGroup
-                        metadata:
-                            name: performance-addon-operator
-                            namespace: openshift-performance-addon-operator
-        - objectDefinition:
-            apiVersion: policy.open-cluster-management.io/v1
-            kind: ConfigurationPolicy
-            metadata:
                 name: common-pao-sub-policy-sub-config
             spec:
                 remediationAction: enforce
@@ -60,9 +44,9 @@ spec:
                         kind: Subscription
                         metadata:
                             name: performance-addon-operator
-                            namespace: openshift-performance-addon-operator
+                            namespace: openshift-operators
                         spec:
-                            channel: "4.8"
+                            channel: "4.7"
                             name: performance-addon-operator
                             source: redhat-operators
                             sourceNamespace: openshift-marketplace
@@ -80,7 +64,7 @@ spec:
                         apiVersion: operators.coreos.com/v1alpha1
                         kind: ClusterServiceVersion
                         metadata:
-                            namespace: openshift-performance-addon-operator
+                            namespace: openshift-operators
                         spec:
                             displayName: Performance Addon Operator
                         status:
