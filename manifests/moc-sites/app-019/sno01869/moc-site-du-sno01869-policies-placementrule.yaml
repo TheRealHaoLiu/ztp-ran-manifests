@@ -1,0 +1,12 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+    name: moc-site-du-sno01869-policies-placementrule
+    namespace: sites-sub
+spec:
+    clusterSelector:
+        matchExpressions:
+            - key: name
+              operator: In
+              values:
+                - sno01869

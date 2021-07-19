@@ -26,9 +26,9 @@ for i in $(seq $START_INDEX $END_INDEX); do
 
     for template_file in $(ls moc-site-template); do
         vlan=$(($RANDOM % 4096))
-        file_name=$(echo $template_file | sed s/SITE/$PREFIX$i/)
+        file_name=$(echo $template_file | sed s/SITE/$PREFIX$idx/)
         cat moc-site-template/$template_file |
-            sed s/SITE/$PREFIX$i/g |
+            sed s/SITE/$PREFIX$idx/g |
             sed s/VLAN/$vlan/g \
                 > $appPath/$file_name
     done
