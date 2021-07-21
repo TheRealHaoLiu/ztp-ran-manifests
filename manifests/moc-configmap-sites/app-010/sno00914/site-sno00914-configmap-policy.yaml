@@ -1,0 +1,65 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: moc-site-sno00914-configmap-policy
+    namespace: sites-sub
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: moc-site-sno00914-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Namespace
+                        metadata:
+                            name: moc-site-sno00914
+                    - complianceType: musthave
+                      objectDefinition:
+                        kind: ConfigMap
+                        apiVersion: v1
+                        metadata:
+                            name: moc-site-sno00914-config
+                            namespace: site-sno00914
+                        data:
+                            performanceProfile-cpu-isolated: "2-19,22-39"
+                            performanceProfile-cpu-reserved: "0-1,20-21"
+                            performanceProfile-pages-size: "32"
+                            performanceProfile-pages-count: "1G"
+
+                            sriovNetwork-fh-resourceName: "du_fh"
+                            sriovNetwork-fh-vlan: "140"
+
+                            sriovNetwork-mh-resourceName: "du_mh"
+                            sriovNetwork-mh-vlan: "150"
+
+                            sriovNetworkNodePolicy-fh-deviceType: "netdevice"
+                            sriovNetworkNodePolicy-fh-isRdma: "true"
+                            sriovNetworkNodePolicy-fh-pfNames: "ens5f0"
+                            sriovNetworkNodePolicy-fh-numVfs: "8"
+                            sriovNetworkNodePolicy-fh-priority: "10"
+                            sriovNetworkNodePolicy-fh-resourceName: "du_fh"
+
+                            sriovNetworkNodePolicy-mh-deviceType: "vfio-pci"
+                            sriovNetworkNodePolicy-mh-isRdma: "false"
+                            sriovNetworkNodePolicy-mh-pfNames: "ens7f0"
+                            sriovNetworkNodePolicy-mh-numVfs: "8"
+                            sriovNetworkNodePolicy-mh-priority: "10"
+                            sriovNetworkNodePolicy-mh-resourceName: "du_mh"
