@@ -27,17 +27,11 @@ spec:
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
-                        apiVersion: v1
-                        kind: Namespace
-                        metadata:
-                            name: moc-site-sno01223
-                    - complianceType: musthave
-                      objectDefinition:
                         kind: ConfigMap
                         apiVersion: v1
                         metadata:
-                            name: moc-site-sno01223-config
-                            namespace: site-sno01223
+                            name: ztp-ran-config
+                            namespace: default
                         data:
                             performanceProfile-cpu-isolated: "2-19,22-39"
                             performanceProfile-cpu-reserved: "0-1,20-21"
