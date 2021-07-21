@@ -1,0 +1,46 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: moc-group-sno-du-sriov-nnp-mh-policy
+    namespace: groups-sub
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: moc-group-sno-du-sriov-nnp-mh-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: sriov-nnp-du-mh
+                            namespace: default
+                        data:
+                            spec: | 
+                                deviceType: '{{- $configMap:= (lookup "v1" "ConfigMap" "default" "ztp-ran-config").data -}} {{ index $configMap "sriovNetworkNodePolicy-mh-deviceType" }}'
+                                isRdma: '{{ index $configMap "sriovNetworkNodePolicy-mh-isRdma" | toBool }}'
+                                nicSelector:
+                                    pfNames:
+                                        - '{{ index $configMap "sriovNetworkNodePolicy-mh-pfNames" }}'
+                                nodeSelector:
+                                    node-role.kubernetes.io/master: ""
+                                numVfs: '+{{ index $configMap "sriovNetworkNodePolicy-mh-numVfs" }}'
+                                priority: '+{{ index $configMap "sriovNetworkNodePolicy-mh-priority" }}'
+                                resourceName: '{{ index $configMap "sriovNetworkNodePolicy-mh-resourceName" }}'
