@@ -1,0 +1,55 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: moc-group-sno-du-perfprofile-policy
+    namespace: groups-sub
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: moc-group-sno-du-perfprofile-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: perfprofile-policy
+                            namespace: default
+                        data:
+                            spec: |
+                                additionalKernelArgs: []
+                                cpu:
+                                    isolated: '{{- $configMap:= (lookup "v1" "ConfigMap" "default" "ztp-ran-config").data -}} {{ index $configMap "performanceProfile-cpu-isolated" }}'
+                                    reserved: '{{ index $configMap "performanceProfile-cpu-reserved" }}'
+                                hugepages:
+                                    defaultHugepagesSize: 1G
+                                    pages:
+                                        - count: '{{ index $configMap "performanceProfile-pages-count" }}'
+                                          size: '+{{ index $configMap "performanceProfile-pages-size" }}'
+                                machineConfigPoolSelector:
+                                    pools.operator.machineconfiguration.openshift.io/master: ""
+                                net:
+                                    userLevelNetworking: true
+                                nodeSelector:
+                                    node-role.kubernetes.io/master: ""
+                                numa:
+                                    topologyPolicy: restricted
+                                realTimeKernel:
+                                    enabled: true
