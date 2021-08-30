@@ -19,28 +19,23 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
                         kind: ConfigMap
                         metadata:
-                            name: sriov-nnp-du-fh
+                            name: moc-sno-sriov-nnp-du-fh
                             namespace: default
                         data:
                             spec: | 
-                                deviceType: '{{- $configMap:= (lookup "v1" "ConfigMap" "default" "ztp-ran-config").data -}} {{ index $configMap "sriovNetworkNodePolicy-fh-deviceType" }}'
-                                isRdma: '{{ index $configMap "sriovNetworkNodePolicy-fh-isRdma" | toBool }}'
+                                deviceType: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-deviceType" hub}}'
+                                isRdma: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-isRdma" | toBool hub}}'
                                 nicSelector:
                                     pfNames:
-                                        - '{{ index $configMap "sriovNetworkNodePolicy-fh-pfNames" }}'
+                                        - '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-pfNames" hub}}'
                                 nodeSelector:
                                     node-role.kubernetes.io/master: ""
-                                numVfs: '+{{ index $configMap "sriovNetworkNodePolicy-fh-numVfs" }}'
-                                priority: '+{{ index $configMap "sriovNetworkNodePolicy-fh-priority" }}'
-                                resourceName: '{{ index $configMap "sriovNetworkNodePolicy-fh-resourceName" }}'
+                                numVfs: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-numVfs" | toInt hub}}'
+                                priority: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-priority" | toInt hub}}'
+                                resourceName: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-fh-resourceName" hub}}'

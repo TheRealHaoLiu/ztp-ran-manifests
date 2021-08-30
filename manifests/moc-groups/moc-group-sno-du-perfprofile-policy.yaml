@@ -19,30 +19,25 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
                         kind: ConfigMap
                         metadata:
-                            name: perfprofile-policy
+                            name: moc-sno-perfprofile-policy
                             namespace: default
                         data:
-                            spec: |
+                            spec: | 
                                 additionalKernelArgs: []
                                 cpu:
-                                    isolated: '{{- $configMap:= (lookup "v1" "ConfigMap" "default" "ztp-ran-config").data -}} {{ index $configMap "performanceProfile-cpu-isolated" }}'
-                                    reserved: '{{ index $configMap "performanceProfile-cpu-reserved" }}'
+                                    isolated: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "performanceProfile-cpu-isolated" hub}}'
+                                    reserved: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "performanceProfile-cpu-reserved" hub}}'
                                 hugepages:
                                     defaultHugepagesSize: 1G
                                     pages:
-                                        - count: '{{ index $configMap "performanceProfile-pages-count" }}'
-                                          size: '+{{ index $configMap "performanceProfile-pages-size" }}'
+                                        - count: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "performanceProfile-pages-count" hub}}'
+                                          size: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "performanceProfile-pages-size" | toInt hub}}'
                                 machineConfigPoolSelector:
                                     pools.operator.machineconfiguration.openshift.io/master: ""
                                 net:

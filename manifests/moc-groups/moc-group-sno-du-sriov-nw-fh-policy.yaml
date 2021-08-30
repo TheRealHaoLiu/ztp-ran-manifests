@@ -19,21 +19,16 @@ spec:
             spec:
                 remediationAction: enforce
                 severity: low
-                namespaceselector:
-                    exclude:
-                        - kube-*
-                    include:
-                        - '*'
                 object-templates:
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
                         kind: ConfigMap
                         metadata:
-                            name: sriov-nw-du-fh
+                            name: moc-sno-sriov-nw-du-fh
                             namespace: default
                         data: 
-                            spec: |
+                            spec: | 
                                 networkNamespace: openshift-sriov-network-operator
-                                resourceName: '{{- $configMap:= (lookup "v1" "ConfigMap" "default" "ztp-ran-config").data -}} {{ index $configMap "sriovNetwork-fh-resourceName" }}'
-                                vlan: '+{{ index $configMap "sriovNetwork-fh-vlan" }}'
+                                resourceName: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetwork-fh-resourceName" hub}}'
+                                vlan: '{{hub fromConfigMap "default" (printf "moc-siteconfig-%s" .ManagedClusterName) "sriovNetwork-fh-vlan" | toInt hub}}'
