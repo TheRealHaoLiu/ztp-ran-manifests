@@ -1,0 +1,64 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: k3s-policies-placementbinding
+    namespace: default
+placementRef:
+    name: k3s-policies-placementrule
+    kind: PlacementRule
+    apiGroup: apps.open-cluster-management.io
+subjects:
+    - name: k3s-sriov-sub-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-ptp-sub-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-pao-sub-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-log-sub-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-worker-mc-mount-ns-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-master-mc-mount-ns-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-console-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-log-forwarder-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-log-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-mc-sctp-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-mc-chronyd-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-ptp-config-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-sriov-operconfig-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-perfprofile-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-sriov-nnp-fh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-sriov-nnp-mh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-sriov-nw-fh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io
+    - name: k3s-du-sriov-nw-mh-policy
+      kind: Policy
+      apiGroup: policy.open-cluster-management.io

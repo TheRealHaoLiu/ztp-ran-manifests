@@ -1,0 +1,41 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-du-sriov-nnp-mh-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-du-sriov-nnp-mh-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-sriov-nnp-du-mh
+                            namespace: default
+                        data:
+                            spec: |
+                                deviceType: '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-deviceType" hub}}'
+                                isRdma: '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-isRdma" | toBool hub}}'
+                                nicSelector:
+                                    pfNames:
+                                        - '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-pfNames" hub}}'
+                                nodeSelector:
+                                    node-role.kubernetes.io/master: ""
+                                numVfs: '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-numVfs" | toInt hub}}'
+                                priority: '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-priority" | toInt hub}}'
+                                resourceName: '{{hub fromConfigMap "default" (printf "k3s-siteconfig-%s" .ManagedClusterName) "sriovNetworkNodePolicy-mh-resourceName" hub}}'

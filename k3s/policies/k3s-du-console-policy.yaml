@@ -1,0 +1,49 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-du-console-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-du-console-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-du-console
+                            namespace: default        
+                        data:
+                            custom-resource: |              
+                                apiVersion: operator.openshift.io/v1
+                                kind: Console
+                                metadata:
+                                    annotations:
+                                        include.release.openshift.io/ibm-cloud-managed: "false"
+                                        include.release.openshift.io/self-managed-high-availability: "false"
+                                        include.release.openshift.io/single-node-developer: "false"
+                                        release.openshift.io/create-only: "true"
+                                    name: cluster
+                                spec:
+                                    logLevel: Normal
+                                    managementState: Removed
+                                    operatorLogLevel: Normal
