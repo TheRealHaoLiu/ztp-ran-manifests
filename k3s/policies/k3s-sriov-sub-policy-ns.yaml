@@ -1,0 +1,117 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-sriov-sub-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-sriov-sub-policy-ns-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-sriov-sub-ns
+                            namespace: default
+                        data:
+                            custom-resource: |                      
+                                apiVersion: v1
+                                kind: Namespace
+                                metadata:
+                                    labels:
+                                        openshift.io/run-level: "1"
+                                    name: openshift-sriov-network-operator
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-sriov-sub-policy-op-group-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-sriov-sub-op-group
+                            namespace: default
+                        data:
+                            custom-resource: |                      
+                                apiVersion: operators.coreos.com/v1
+                                kind: OperatorGroup
+                                metadata:
+                                    name: sriov-network-operators
+                                    namespace: openshift-sriov-network-operator
+                                spec:
+                                    targetNamespaces:
+                                        - openshift-sriov-network-operator
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-sriov-sub-policy-subscription-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-sriov-sub-subscription
+                            namespace: default
+                        data:
+                            custom-resource: |                      
+                                apiVersion: operators.coreos.com/v1alpha1
+                                kind: Subscription
+                                metadata:
+                                    name: sriov-network-operator-subscription
+                                    namespace: openshift-sriov-network-operator
+                                spec:
+                                    channel: "4.7"
+                                    name: sriov-network-operator
+                                    source: redhat-operators
+                                    sourceNamespace: openshift-marketplace
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-sriov-sub-policy-operator-check
+            spec:
+                remediationAction: inform
+                severity: low
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-sriov-sub-operator-check
+                            namespace: default
+                        data:
+                            custom-resource: |                      
+                                apiVersion: operators.coreos.com/v1alpha1
+                                kind: ClusterServiceVersion
+                                metadata:
+                                    namespace: openshift-sriov-network-operator
+                                spec:
+                                    displayName: SR-IOV Network Operator
+                                status:
+                                    phase: Succeeded

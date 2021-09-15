@@ -1,0 +1,12 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+    name: k3s-policies-placementrule
+    namespace: default
+spec:
+    clusterSelector:
+        matchExpressions:
+            - key: vendor
+              operator: In
+              values:
+                  - K3S

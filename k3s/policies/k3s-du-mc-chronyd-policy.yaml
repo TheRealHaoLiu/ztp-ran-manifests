@@ -1,0 +1,68 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-du-mc-chronyd-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-du-mc-chronyd-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-du-mc-chronyd
+                            namespace: default        
+                        data:
+                            custom-resource: |                      
+                                apiVersion: machineconfiguration.openshift.io/v1
+                                kind: MachineConfig
+                                metadata:
+                                    labels:
+                                        machineconfiguration.openshift.io/role: master
+                                    name: disable-chronyd
+                                spec:
+                                    config:
+                                        ignition:
+                                            version: 2.2.0
+                                        systemd:
+                                            units:
+                                                - contents: |
+                                                    [Unit]
+                                                    Description=NTP client/server
+                                                    Documentation=man:chronyd(8) man:chrony.conf(5)
+                                                    After=ntpdate.service sntp.service ntpd.service
+                                                    Conflicts=ntpd.service systemd-timesyncd.service
+                                                    ConditionCapability=CAP_SYS_TIME
+                                                    [Service]
+                                                    Type=forking
+                                                    PIDFile=/run/chrony/chronyd.pid
+                                                    EnvironmentFile=-/etc/sysconfig/chronyd
+                                                    ExecStart=/usr/sbin/chronyd $OPTIONS
+                                                    ExecStartPost=/usr/libexec/chrony-helper update-daemon
+                                                    PrivateTmp=yes
+                                                    ProtectHome=yes
+                                                    ProtectSystem=full
+                                                    [Install]
+                                                    WantedBy=multi-user.target
+                                                enabled: false
+                                                name: chronyd.service

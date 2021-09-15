@@ -1,0 +1,47 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-du-sriov-operconfig-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-du-sriov-operconfig-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-du-sriov-operconfig
+                            namespace: default        
+                        data:
+                            custom-resource: |                      
+                                apiVersion: sriovnetwork.openshift.io/v1
+                                kind: SriovOperatorConfig
+                                metadata:
+                                    name: default
+                                    namespace: openshift-sriov-network-operator
+                                spec:
+                                    configDaemonNodeSelector:
+                                        node-role.kubernetes.io/master: ""
+                                    disableDrain: true
+                                    enableInjector: true
+                                    enableOperatorWebhook: true

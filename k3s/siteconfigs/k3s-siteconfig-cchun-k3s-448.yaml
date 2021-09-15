@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: k3s-siteconfig-cchun-k3s-448
+    namespace: default
+data:
+    performanceProfile-cpu-isolated: '2-19,22-39'
+    performanceProfile-cpu-reserved: '0-1,20-21'
+    performanceProfile-pages-size: '32'
+    performanceProfile-pages-count: '1G'
+    sriovNetwork-fh-resourceName: 'du_fh'
+    sriovNetwork-fh-vlan: '448'
+    sriovNetwork-mh-resourceName: 'du_mh'
+    sriovNetwork-mh-vlan: '449'
+    sriovNetworkNodePolicy-fh-deviceType: 'netdevice'
+    sriovNetworkNodePolicy-fh-isRdma: 'true'
+    sriovNetworkNodePolicy-fh-pfNames: 'ens5f0'
+    sriovNetworkNodePolicy-fh-numVfs: '8'
+    sriovNetworkNodePolicy-fh-priority: '10'
+    sriovNetworkNodePolicy-fh-resourceName: 'du_fh'
+    sriovNetworkNodePolicy-mh-deviceType: 'vfio-pci'
+    sriovNetworkNodePolicy-mh-isRdma: 'false'
+    sriovNetworkNodePolicy-mh-pfNames: 'ens7f0'
+    sriovNetworkNodePolicy-mh-numVfs: '8'
+    sriovNetworkNodePolicy-mh-priority: '10'
+    sriovNetworkNodePolicy-mh-resourceName: 'du_mh'

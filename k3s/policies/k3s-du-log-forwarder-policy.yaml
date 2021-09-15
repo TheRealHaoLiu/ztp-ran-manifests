@@ -1,0 +1,69 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    name: k3s-du-log-forwarder-policy
+    namespace: default
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+    remediationAction: enforce
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: k3s-du-log-forwarder-policy-config
+            spec:
+                remediationAction: enforce
+                severity: low
+                namespaceselector:
+                    exclude:
+                        - kube-*
+                    include:
+                        - '*'
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: ConfigMap
+                        metadata:
+                            name: k3s-du-log-forwarder
+                            namespace: default        
+                        data:
+                            custom-resource: |                                
+                                apiVersion: logging.openshift.io/v1
+                                kind: ClusterLogForwarder
+                                metadata:
+                                    name: instance
+                                    namespace: openshift-logging
+                                spec:
+                                    inputs:
+                                        - infrastructure:
+                                            namespaces:
+                                                - openshift-apiserver
+                                                - openshift-cluster-version
+                                                - openshift-etcd
+                                                - openshift-kube-scheduler
+                                                - openshift-monitoring
+                                                - openshift-performance-addon
+                                                - openshift-ptp
+                                                - openshift-machine-config-operator
+                                        name: infra-logs
+                                    outputs:
+                                        - name: kafka-open
+                                        type: kafka
+                                        url: tcp://10.46.55.190:9092/test
+                                    pipelines:
+                                        - inputRefs:
+                                            - audit
+                                        name: audit-logs
+                                        outputRefs:
+                                            - kafka-open
+                                        - inputRefs:
+                                            - infrastructure
+                                        name: infrastructure-logs
+                                        outputRefs:
+                                            - kafka-open
